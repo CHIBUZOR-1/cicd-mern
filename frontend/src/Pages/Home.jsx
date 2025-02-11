@@ -112,7 +112,7 @@ const Home = () => {
           <input type="text" name='uname' value={newInfo?.uname} onChange={handleChange1} className='w-full rounded-md font-semibold bg-slate-200 p-1 border border-slate-400' />
         </div>
         <div className='w-full flex items-center justify-center'>
-          <button onClick={handleUpdate1} className={`w-[80%] ${load && 'animate-pulse'} border  flex max-sm:text-sm items-center justify-center gap-2 bg-facebookDark-400 active:bg-orange-800 p-2 outline-none bg-red-600 text-white font-semibold rounded-md`}>{load? 'updating...':'Update'}</button>
+          <button onClick={handleUpdate1} className={`w-[80%] ${load && 'animate-pulse'} border  flex max-sm:text-sm items-center justify-center gap-2 bg-facebookDark-400 active:bg-orange-800 p-2 outline-none bg-blue-600 text-white font-semibold rounded-md`}>{load? 'updating...':'Update'}</button>
         </div>
         <div className='w-full flex items-center justify-center'>
           <button onClick={handleLogOut} className={`w-[80%] ${load3 && 'animate-pulse'} border  flex max-sm:text-sm items-center justify-center gap-2 bg-facebookDark-400 active:bg-orange-800 p-2 outline-none bg-blue-600 text-white font-semibold rounded-md`}>{load3? 'please wait...':'Logout'}</button>
