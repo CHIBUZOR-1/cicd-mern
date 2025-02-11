@@ -1,0 +1,59 @@
+name: Deploy to Render with cicd mern
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '22.13.1'
+
+    - name: Install dependencies and build frontend
+      run: |
+        cd frontend
+        npm install
+        npm run build
+
+    - name: Install dependencies and run tests for backend
+      env:
+        MONGOOSE_URL: ${{ secrets.MONGOOSE_URL }}
+      run: |
+        cd backend
+        npm install
+        npm test
+
+    - name: Deploy to Render
+      env:
+        RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        HOSTPORT: ${{ secrets.HOSTPORT }}
+        ORIGIN: ${{ secrets.ORIGIN }}
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        MONGOOSE_URL: ${{ secrets.MONGOOSE_URL }} # Assuming this is the same as MONGO_URI
+        NODE_ENV: ${{ secrets.NODE_ENV }}
+        EMAIL: ${{ secrets.EMAIL }}
+        PASSWORD: ${{ secrets.PASSWORD }}
+        SECURE: ${{ secrets.SECURE }}
+        PORTZ: ${{ secrets.PORTZ }}
+        HOST: ${{ secrets.HOST }}
+        SERVICE: ${{ secrets.SERVICE }}
+        CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+        CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+        CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+        VITE_API_URL: ${{ secrets.VITE_API_URL }}
+      run: |
+        curl -X POST \
+        -H 'Accept: application/vnd.api+json' \
+        -H 'Authorization: Bearer $RENDER_API_KEY' \
+        -H 'Content-Type: application/json' \
+        -d '{"service_id":"srv-culd6f0gph6c73daiub0"}' \
+        https://api.render.com/v1/services/srv-culd6f0gph6c73daiub0/deploys
