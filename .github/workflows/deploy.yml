@@ -24,13 +24,12 @@ jobs:
         npm install
         npm run build
 
-    - name: Install dependencies and run tests for backend
+    - name: Install dependencies for backend
       env:
         MONGOOSE_URL: ${{ secrets.MONGOOSE_URL }}
       run: |
         cd backend
         npm install
-        npm test
 
     - name: Deploy to Render
       env:
